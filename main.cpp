@@ -93,6 +93,28 @@ public:
 			H = H->next;
 		} 
 	}
+	void delall(T val) {
+		while((this->head!=nullptr)&&(this->head->value==val))
+		{
+			this->head = this->head->next;
+		}
+		Node<T>(*H) = this->head;
+		while (H != nullptr) {
+		
+			if (H->next != nullptr)
+			{
+				if (H->next->value == val) {
+					H->next = H->next->next;
+					continue;
+				}
+			}
+			if ((H->next != nullptr) && (H->next->next == nullptr) && (H->next->value == val))
+			{
+				H->next = nullptr;
+			}
+			H = H->next;
+		}
+	}
 	void printstr() {
 		Node<T>* H = this->head;
 		while (H != nullptr) 

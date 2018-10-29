@@ -74,7 +74,7 @@ public:
 		
 		return nullptr;
 	}
-	//óäàëåíèå ýëåìåíòà
+	//русские буквы
 	void del(T val) {
 		if (this->head->value == val)
 		{

@@ -94,10 +94,10 @@ public:
 			}
 			if((H->next != nullptr)&&(H->next->next==nullptr) )
 			{
-				if 
-					(H->next->value == val) {
+					if (H->next->value == val) {
 					this->tail = H;
 					this->tail->next = nullptr;
+					return;
 				}
 			}
 			H = H->next;

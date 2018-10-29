@@ -73,13 +73,18 @@ public:
 		
 		return nullptr;
 	}
-	//σδΰλενθε ύλεμενςΰ
+	//Γ³Γ€Γ Γ«Γ₯Γ­Γ¨Γ₯ Γ½Γ«Γ₯Γ¬Γ₯Γ­Γ²Γ 
 	void del(T val) {
+		if (this->head->value == val)
+		{
+			this->head = this->head->next;
+			return;
+		}
+
 		Node<T>(*H) = this->head;
 		if (H->value == val) {
 			this->head = this->head->next;
 		}
-		int i = 0;
 		while (H != nullptr){ 
 			
 			if (H->next !=nullptr)
@@ -89,6 +94,10 @@ public:
 					H->next = H->next->next;
 					return;
 				}
+			}
+			if ((H->next != nullptr) && (H->next->next == nullptr) && (H->next->value == val))
+			{
+				H->next = nullptr;
 			}
 			H = H->next;
 		} 
@@ -154,7 +163,7 @@ int main()
 	Node<int>*P;
 	P = obg.find(0);
 
-	//13 ύλεμενς
+	//13 Γ½Γ«Γ₯Γ¬Γ₯Γ­Γ²
 	obg.del(13);
 	obg.printstr();
 

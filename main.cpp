@@ -54,11 +54,12 @@ public:
 	}
 	T getvalhead() 
 	{
-		return this->head->getvalue();
+		return this->head->value;
 	}
+
 	T getvaltail()
 	{
-		return this->tail->getvalue();
+		return this->tail->value;
 	}
 	Node<T>* find(T val) {
 		Node<T> (*H) = this->head;
@@ -80,14 +81,10 @@ public:
 			this->head = this->head->next;
 			return;
 		}
-
 		Node<T>(*H) = this->head;
-		if (H->value == val) {
-			this->head = this->head->next;
-		}
 		while (H != nullptr){ 
 			
-			if (H->next !=nullptr)
+			if ((H->next !=nullptr) && (H->next->next != nullptr))
 			{
 				if (H->next->value==val) {
 					
@@ -95,9 +92,13 @@ public:
 					return;
 				}
 			}
-			if ((H->next != nullptr) && (H->next->next == nullptr) && (H->next->value == val))
+			if((H->next != nullptr)&&(H->next->next==nullptr) )
 			{
-				H->next = nullptr;
+				if 
+					(H->next->value == val) {
+					this->tail = H;
+					this->tail->next = nullptr;
+				}
 			}
 			H = H->next;
 		} 

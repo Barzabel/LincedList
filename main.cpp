@@ -63,93 +63,104 @@ public:
 
 
 
-	void del(T val)
+	void del(T val,bool ALL=false)
 	{
+		
+		if(ALL) {
 
-		if (this->head == nullptr)
-		{
-			return;
-		}
-		if ((this->head->value == val) && (this->head == this->tail))
-		{
-			this->head = nullptr;
-			this->tail = nullptr;
-			return;
-		}
-		if (this->head->next != nullptr)
-		{
+			if (this->head == nullptr)
+			{
+				return;
+			}
+			if ((this->head->value == val) && (this->head == this->tail))
+			{
+				this->head = nullptr;
+				this->tail = nullptr;
+				return;
+			}
+			Node<T>*H = this->head;
 			if (this->head->value == val)
 			{
 				this->head = this->head->next;
-				return;
 			}
-		}
-
-		Node<T>(*H) = this->head;
-		while (H != nullptr) {
-
-			if ((H->next != nullptr) && (H->next->next != nullptr))
+			while (H != nullptr)
 			{
-				if (H->next->value == val) {
+				if ((H->next != nullptr) && (H->next->value == val))
+				{
+					if (H->next->next == nullptr)
+					{
+						this->tail = H;
+					}
 
 					H->next = H->next->next;
-					return;
 				}
-			}
-			if ((H->next != nullptr) && (H->next->next == nullptr))
-			{
-				if (H->next->value == val) {
-
-					this->tail = H;
-					this->tail->next = nullptr;
-					return;
-				}
-			}
-			H = H->next;
-		}
-	}
-
-	void delall(T val) {
-
-		if (this->head == nullptr)
-		{
-			return;
-		}
-		if ((this->head->value == val) && (this->head == this->tail))
-		{
-			this->head = nullptr;
-			this->tail = nullptr;
-			return;
-		}
-		Node<T>*H = this->head;
-		if(this->head->value == val)
-		{
-			this->head = this->head->next;
-		}
-		while(H!=nullptr)
-		{
-			if((H->next!=nullptr)&&(H->next->value==val))
-			{
-				if(H->next->next==nullptr)
+				else
 				{
-					this->tail = H;
+					H = H->next;
 				}
-
-				H->next = H->next->next;
 			}
-			else
+			if ((this->head != nullptr) && (this->head->next == nullptr))
 			{
-			H = H->next;
+				this->tail = this->head;
+			}
+			if (this->head == nullptr)
+			{
+				this->tail = nullptr;
 			}
 		}
-		if ((this->head != nullptr) && (this->head->next == nullptr))
+
+		else
 		{
-			this->tail = this->head;
+
+			if (this->head == nullptr)
+			{
+				return;
+			}
+			if ((this->head->value == val) && (this->head == this->tail))
+			{
+				this->head = nullptr;
+				this->tail = nullptr;
+				return;
+			}
+			if (this->head->next != nullptr)
+			{
+				if (this->head->value == val)
+				{
+					this->head = this->head->next;
+					return;
+				}
+			}
+			
+			Node<T>(*H) = this->head;
+			while (H != nullptr) {
+
+				if ((H->next != nullptr) && (H->next->next != nullptr))
+				{
+					if (H->next->value == val) {
+	
+						H->next = H->next->next;
+						return;
+					}
+				}
+				if ((H->next != nullptr) && (H->next->next == nullptr))
+				{
+					if (H->next->value == val) {
+						
+						this->tail = H;
+						this->tail->next = nullptr;
+						return;
+					}
+				}
+				H = H->next;
+			}
 		}
-		if (this->head == nullptr)
-		{
-			this->tail = nullptr;
-		}
+
+
+
+
+
+
+
 	}
 
 	void dellist() 
@@ -206,11 +217,11 @@ int main()
 
 	obg.printstr();
 	cout << endl;
-	obg.delall(1);
+	obg.del(1,true);
 
 	obg.printstr();
 
-	cout <<"\n"<< obg.getvalhead();
+	
 
 
 	return 0;

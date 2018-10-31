@@ -66,7 +66,7 @@ public:
 	void del(T val,bool ALL=false)
 	{
 		
-		if(ALL) {
+		
 
 			if (this->head == nullptr)
 			{
@@ -78,21 +78,51 @@ public:
 				this->tail = nullptr;
 				return;
 			}
+			if ((!ALL) && (this->head->next==this->tail) && (this->head->value==val))
+			{
+				
+				this->head = this->tail;
+				return;
+			}
+		
+
+
 			Node<T>*H = this->head;
 			if (this->head->value == val)
 			{
 				this->head = this->head->next;
+
+
+
+				
+				if(!ALL) 
+				{
+					return;
+				}
 			}
 			while (H != nullptr)
 			{
+				if (H->next != nullptr) {
+					
+
+				}
+				
 				if ((H->next != nullptr) && (H->next->value == val))
 				{
+					
 					if (H->next->next == nullptr)
 					{
+					
 						this->tail = H;
+						this->tail->next = nullptr;
+						return;
 					}
 
 					H->next = H->next->next;
+					
+					if (!ALL) { return; }
+
+					
 				}
 				else
 				{
@@ -107,60 +137,6 @@ public:
 			{
 				this->tail = nullptr;
 			}
-		}
-
-		else
-		{
-
-			if (this->head == nullptr)
-			{
-				return;
-			}
-			if ((this->head->value == val) && (this->head == this->tail))
-			{
-				this->head = nullptr;
-				this->tail = nullptr;
-				return;
-			}
-			if (this->head->next != nullptr)
-			{
-				if (this->head->value == val)
-				{
-					this->head = this->head->next;
-					return;
-				}
-			}
-			
-			Node<T>(*H) = this->head;
-			while (H != nullptr) {
-
-				if ((H->next != nullptr) && (H->next->next != nullptr))
-				{
-					if (H->next->value == val) {
-	
-						H->next = H->next->next;
-						return;
-					}
-				}
-				if ((H->next != nullptr) && (H->next->next == nullptr))
-				{
-					if (H->next->value == val) {
-						
-						this->tail = H;
-						this->tail->next = nullptr;
-						return;
-					}
-				}
-				H = H->next;
-			}
-		}
-
-
-
-
-
-
-
 	}
 
 	void dellist() 
@@ -190,20 +166,20 @@ private:
 
 int main()
 {
-	Node<int> *pa = new Node<int>(2);
-	Node<int> *pb = new Node<int>(1);
+	Node<int> *pa = new Node<int>(1);
+	Node<int> *pb = new Node<int>(2);
 	Node<int> *pc = new Node<int>(2);
-	Node<int> *pd = new Node<int>(1);
-	Node<int> *p1 = new Node<int>(1);
-	Node<int> *p2 = new Node<int>(1);
+	Node<int> *pd = new Node<int>(2);
+	Node<int> *p1 = new Node<int>(2);
+	Node<int> *p2 = new Node<int>(2);
 	Node<int> *p3 = new Node<int>(2);
-	Node<int> *p4 = new Node<int>(1);
+	Node<int> *p4 = new Node<int>(2);
 	Node<int> *p5 = new Node<int>(1);
 
 
 	LinkedList<int> obg;
 	obg.add_in_tail(pa);
-	obg.add_in_tail(pb);
+	//obg.add_in_tail(pb);
 	//obg.add_in_tail(pc);
 	//obg.add_in_tail(pd);
 	//obg.add_in_tail(p1);
@@ -221,7 +197,7 @@ int main()
 
 	obg.printstr();
 
-	
+
 
 
 	return 0;

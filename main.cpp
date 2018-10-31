@@ -146,6 +146,11 @@ public:
 		this->tail = nullptr;
 	}
 
+	void add_in_position(Node<T>*position, Node<T>*value)
+	{
+		value->next = position->next;
+		position->next = value;
+	}
 
 	LinkedList<T> findall(T val)
 	{

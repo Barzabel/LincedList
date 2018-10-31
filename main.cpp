@@ -1,4 +1,4 @@
-﻿#include<iostream>
+#include<iostream>
 using namespace std;
 
 template<class T>
@@ -22,6 +22,7 @@ public:
 	LinkedList() {
 		this->head = nullptr;
 		this->tail = nullptr;
+		this->i = 0;
 	}
 	void add_in_tail(Node<T> *item) {
 		if (this->head == nullptr)
@@ -36,6 +37,7 @@ public:
 			this->tail = item;
 			this->tail->next = nullptr;
 		}
+		this->i++;
 	}
 
 	T getvalhead()
@@ -76,12 +78,14 @@ public:
 			{
 				this->head = nullptr;
 				this->tail = nullptr;
+				this->i = 0;
 				return;
 			}
 			if ((!ALL) && (this->head->next==this->tail) && (this->head->value==val))
 			{
 				
 				this->head = this->tail;
+				this->i--;
 				return;
 			}
 		
@@ -92,7 +96,7 @@ public:
 			{
 				this->head = this->head->next;
 
-
+				this->i--;
 
 				
 				if(!ALL) 
@@ -102,22 +106,19 @@ public:
 			}
 			while (H != nullptr)
 			{
-				if (H->next != nullptr) {
-					
-
-				}
+				
 				
 				if ((H->next != nullptr) && (H->next->value == val))
 				{
 					
 					if (H->next->next == nullptr)
 					{
-					
+						this->i--;
 						this->tail = H;
 						this->tail->next = nullptr;
 						return;
 					}
-
+					this->i--;
 					H->next = H->next->next;
 					
 					if (!ALL) { return; }
@@ -146,6 +147,24 @@ public:
 	}
 
 
+	LinkedList<T> findall(T val)
+	{
+
+		LinkedList<T> robg;
+		Node<T> *H = this->head;
+		Node<T> *p = nullptr;
+		while(H!=nullptr)
+		{
+
+			if (H->value == val) 
+			{
+				p = new Node<T>(val);
+				robg.add_in_tail(p);
+			}
+			H = H->next;
+		}
+		return robg;
+	}
 
 	void printstr() {
 		Node<T>* H = this->head;
@@ -156,7 +175,13 @@ public:
 		}
 	}
 
+	unsigned int getsize() {
+		return this->i;
+	}
+
+
 private:
+	unsigned int i;
 	Node<T> *head;
 	Node<T> *tail;
 };
@@ -166,7 +191,7 @@ private:
 
 int main()
 {
-	Node<int> *pa = new Node<int>(1);
+	Node<int> *pa = new Node<int>(2);
 	Node<int> *pb = new Node<int>(2);
 	Node<int> *pc = new Node<int>(2);
 	Node<int> *pd = new Node<int>(2);
@@ -179,9 +204,9 @@ int main()
 
 	LinkedList<int> obg;
 	obg.add_in_tail(pa);
-	//obg.add_in_tail(pb);
-	//obg.add_in_tail(pc);
-	//obg.add_in_tail(pd);
+	obg.add_in_tail(pb);
+	obg.add_in_tail(pc);
+	obg.add_in_tail(pd);
 	//obg.add_in_tail(p1);
 	//obg.add_in_tail(p2);
 	//obg.add_in_tail(p3);
@@ -193,11 +218,19 @@ int main()
 
 	obg.printstr();
 	cout << endl;
-	obg.del(1,true);
+	//obg.del(1,true);
+	//obg.printstr();
+	LinkedList<int> *obg2;
 
-	obg.printstr();
 
 
+	obg2=&obg.findall(1);
+
+
+	cout << endl;
+
+
+	cout<<obg2->getsize();
 
 
 	return 0;

@@ -1,6 +1,10 @@
 #include<iostream>
 using namespace std;
 
+
+
+
+
 template<class T>
 class Node {
 public:
@@ -171,6 +175,9 @@ public:
 		return robg;
 	}
 
+
+
+
 	void printstr() {
 		Node<T>* H = this->head;
 		while (H != nullptr)
@@ -184,12 +191,42 @@ public:
 		return this->i;
 	}
 
+	friend LinkedList<T> list_add_list(LinkedList<T> *val1, LinkedList<T> *val2)
+{
+
+	LinkedList<T> res;
+	if (val1->i == val2->i)
+	{
+		Node<T>*H1 = val1->head;
+
+		Node<T>*H2 = val2->head;
+		Node<T>*P;
+
+		while (H1 != nullptr)
+		{
+			P = new Node<T>(H1->value + H2->value);
+			res.add_in_tail(P);
+			H1 = H1->next;
+			H2 = H2->next;
+		}
+
+
+
+	}
+	return res;
+}
+
 
 private:
 	unsigned int i;
 	Node<T> *head;
 	Node<T> *tail;
 };
+
+
+
+
+
 
 
 
@@ -204,38 +241,27 @@ int main()
 	Node<int> *p2 = new Node<int>(2);
 	Node<int> *p3 = new Node<int>(2);
 	Node<int> *p4 = new Node<int>(2);
-	Node<int> *p5 = new Node<int>(1);
-
+	Node<int> *p5 = new Node<int>(2);
+	Node<int> *p6 = new Node<int>(2);
 
 	LinkedList<int> obg;
 	obg.add_in_tail(pa);
 	obg.add_in_tail(pb);
 	obg.add_in_tail(pc);
 	obg.add_in_tail(pd);
-	//obg.add_in_tail(p1);
-	//obg.add_in_tail(p2);
-	//obg.add_in_tail(p3);
-	//obg.add_in_tail(p4);
-	//obg.add_in_tail(p5);
-
-	Node<int>*P;
-	P = obg.find(0);
-
-	obg.printstr();
-	cout << endl;
-	//obg.del(1,true);
-	//obg.printstr();
-	LinkedList<int> *obg2;
+	
 
 
+	LinkedList<int> obg2;
 
-	obg2=&obg.findall(1);
+	obg2.add_in_tail(p1);
+	obg2.add_in_tail(p2);
+	obg2.add_in_tail(p3);
+	obg2.add_in_tail(p4);
 
-
-	cout << endl;
-
-
-	cout<<obg2->getsize();
+	LinkedList<int> obg3;
+	obg3 = list_add_list(&obg, &obg2);
+	obg3.printstr();
 
 
 	return 0;

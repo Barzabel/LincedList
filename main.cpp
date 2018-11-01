@@ -26,7 +26,7 @@ public:
 	LinkedList() {
 		this->head = nullptr;
 		this->tail = nullptr;
-		this->i = 0;
+		this->count = 0;
 	}
 	void add_in_tail(Node<T> *item) {
 		if (this->head == nullptr)
@@ -41,7 +41,7 @@ public:
 			this->tail = item;
 			this->tail->next = nullptr;
 		}
-		this->i++;
+		this->count++;
 	}
 
 	T getvalhead()
@@ -82,14 +82,14 @@ public:
 			{
 				this->head = nullptr;
 				this->tail = nullptr;
-				this->i = 0;
+				this->count= 0;
 				return;
 			}
 			if ((!ALL) && (this->head->next==this->tail) && (this->head->value==val))
 			{
 				
 				this->head = this->tail;
-				this->i--;
+				this->count--;
 				return;
 			}
 		
@@ -100,7 +100,7 @@ public:
 			{
 				this->head = this->head->next;
 
-				this->i--;
+				this->count--;
 
 				
 				if(!ALL) 
@@ -117,17 +117,17 @@ public:
 					
 					if (H->next->next == nullptr)
 					{
-						this->i--;
+						this->count--;
 						this->tail = H;
 						this->tail->next = nullptr;
 						return;
 					}
-					this->i--;
+					this->count--;
 					H->next = H->next->next;
 					
 					if (!ALL) { return; }
 
-					
+				
 				}
 				else
 				{
@@ -148,27 +148,36 @@ public:
 	{
 		this->head = nullptr;
 		this->tail = nullptr;
+		this->count = 0;
 	}
 
 	void add_in_position(Node<T>*position, Node<T>*value)
 	{
+		if (position->next == nullptr) 
+		{
+			position->next = value;
+			value->next = nullptr;
+			this->tail = value;
+		}else{
 		value->next = position->next;
 		position->next = value;
+		}
+		this->count++;
 	}
 
-	LinkedList<T> findall(T val)
+	LinkedList<T>* findall(T val)
 	{
 
-		LinkedList<T> robg;
+		LinkedList<T>* robg=new LinkedList<T>;
 		Node<T> *H = this->head;
-		Node<T> *p = nullptr;
+		Node<T> *p;
 		while(H!=nullptr)
 		{
 
 			if (H->value == val) 
 			{
 				p = new Node<T>(val);
-				robg.add_in_tail(p);
+				robg->add_in_tail(p);
 			}
 			H = H->next;
 		}
@@ -188,14 +197,14 @@ public:
 	}
 
 	unsigned int getsize() {
-		return this->i;
+		return this->count;
 	}
 
-	friend LinkedList<T> list_add_list(LinkedList<T> *val1, LinkedList<T> *val2)
+	friend LinkedList<T>* list_add_list(LinkedList<T> *val1, LinkedList<T> *val2)
 {
 
-	LinkedList<T> res;
-	if (val1->i == val2->i)
+	LinkedList<T> *res= new LinkedList<T>;
+	if (val1->count == val2->count)
 	{
 		Node<T>*H1 = val1->head;
 
@@ -205,7 +214,7 @@ public:
 		while (H1 != nullptr)
 		{
 			P = new Node<T>(H1->value + H2->value);
-			res.add_in_tail(P);
+			res->add_in_tail(P);
 			H1 = H1->next;
 			H2 = H2->next;
 		}
@@ -218,7 +227,7 @@ public:
 
 
 private:
-	unsigned int i;
+	unsigned int count;
 	Node<T> *head;
 	Node<T> *tail;
 };
@@ -236,7 +245,7 @@ int main()
 	Node<int> *pa = new Node<int>(2);
 	Node<int> *pb = new Node<int>(2);
 	Node<int> *pc = new Node<int>(2);
-	Node<int> *pd = new Node<int>(2);
+	Node<int> *pd = new Node<int>(4);
 	Node<int> *p1 = new Node<int>(2);
 	Node<int> *p2 = new Node<int>(2);
 	Node<int> *p3 = new Node<int>(2);
@@ -248,7 +257,7 @@ int main()
 	obg.add_in_tail(pa);
 	obg.add_in_tail(pb);
 	obg.add_in_tail(pc);
-	obg.add_in_tail(pd);
+	
 	
 
 
@@ -259,9 +268,16 @@ int main()
 	obg2.add_in_tail(p3);
 	obg2.add_in_tail(p4);
 
-	LinkedList<int> obg3;
-	obg3 = list_add_list(&obg, &obg2);
-	obg3.printstr();
+	
+
+	obg.add_in_position(pc, pd);
+	
+
+
+
+	LinkedList<int>* obg3;
+	obg3 = obg2.findall(2);
+	obg3->printstr();
 
 
 	return 0;
